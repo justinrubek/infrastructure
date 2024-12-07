@@ -54,21 +54,12 @@ in {
         };
       };
 
-      justinrubek.programs.pijul = {
-        enable = true;
-        config = {
-          inherit full_name name email;
-        };
-      };
-
       home.packages = with pkgs; [
         ripgrep
         httpie
         curlie
         gnumake
         gcc
-        inputs.git-prune-branches.packages.${pkgs.system}.git-prune-branches
-        inputs.gitu.packages.${pkgs.system}.gitu
         cargo
         rustc
         rust-analyzer

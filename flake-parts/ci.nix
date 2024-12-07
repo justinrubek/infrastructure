@@ -1,4 +1,4 @@
-{inputs, ...}: {
+_: {
   perSystem = {
     config,
     pkgs,
@@ -18,7 +18,7 @@
         LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath packages;
       };
     };
-  in rec {
+  in {
     inherit devShells;
 
     legacyPackages = {

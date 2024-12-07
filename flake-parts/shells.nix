@@ -1,10 +1,4 @@
-{
-  config,
-  inputs,
-  lib,
-  self,
-  ...
-}: {
+{inputs, ...}: {
   perSystem = {
     config,
     pkgs,
@@ -16,12 +10,13 @@
     hashicorp-pkgs = inputs.hashicorp_nixpkgs.legacyPackages.${system};
   in {
     devShells = {
-      default = pkgs.mkShell {
-        buildInputs = with pkgs; [
+      default = pkgs.mkShell rec {
+        packages = with pkgs; [
+          pkgs.openssl
+          pkgs.openssl.dev
+
           alejandra
           pkgs.attic-client
-          inputs.home-manager.packages.${system}.home-manager
-          pkgs.nh
           hcloud
           hashicorp-pkgs.packer
           inputs'.deploy-rs.packages.deploy-rs
@@ -30,7 +25,6 @@
           pkgs.ssh-to-age
           pkgs.sops
 
-          self'.packages.push-configuration
           inputs'.thoenix.packages.cli
           self'.packages.terraform
 
@@ -41,9 +35,10 @@
           pkgs.skopeo
           self'.packages."scripts/skopeo-push"
 
-          inputs'.lockpad.packages.cli
           inputs'.nix-postgres.packages."psql_15/bin"
         ];
+
+        LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath packages;
 
         shellHook = ''
           ${config.pre-commit.installationScript}
