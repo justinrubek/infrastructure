@@ -49,3 +49,21 @@ creation_rules:
     - age:
       - *admin_justin
       - *server_alex
+
+  - path_regex: secrets/nodes/controller0.yaml$
+    key_groups:
+    - age:
+      - *admin_justin
+      - *server_bunky
+
+  - path_regex: secrets/nodes/controller1.yaml$
+    key_groups:
+    - age:
+      - *admin_justin
+      - *server_pyxis
+
+  - path_regex: secrets/nodes/controller2.yaml$
+    key_groups:
+    - age:
+      - *admin_justin
+      - *server_ceylon
