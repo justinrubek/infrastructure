@@ -1,5 +1,5 @@
 {
-  pkgs,
+  config,
   lib,
   ...
 }: {
@@ -7,19 +7,7 @@
     ./hardware.nix
   ];
 
-  # Linux kernel
-
-  # Enable networking
   # networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "America/Chicago";
-
-  # Select internationalisation properties.
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-  };
-
   systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
 
   # personal modules
@@ -52,37 +40,17 @@
     };
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users = {
-    justin = {
-      isNormalUser = true;
-      description = "Justin";
-      extraGroups = ["networkmanager" "wheel"];
-      shell = pkgs.zsh;
-
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL1Uj62/yt8juK3rSfrVuX/Ut+xzw1Z75KZS/7fOLm6l justin@eunomia"
-      ];
+  services = {
+    etcd = {
+      enable = true;
+      initialCluster = ["bunky=http://100.96.238.57:2380" "ceylon=http://100.101.20.26:2380" "pyxis=http://100.100.135.61:2380"];
+      # initialClusterState = "existing";
+      listenClientUrls = ["http://100.101.20.26:2379" "http://127.0.0.1:2379"];
+      listenPeerUrls = ["http://100.101.20.26:2380"];
     };
+    # rpc.statd fix
+    nfs.server.enable = true;
   };
-
-  programs.zsh.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-  ];
-
-  # services.openssh = {
-  #   enable = true;
-  #   permitRootLogin = "no";
-  # };
-
-  # rpc.statd fix
-  services.nfs.server.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -97,10 +65,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
-  nix = {
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
 }
