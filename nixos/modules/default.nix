@@ -8,6 +8,7 @@
 
     nomad = ./nomad;
     vault = ./vault;
+    "vault/reader" = ./vault/reader.nix;
     consul = ./consul;
 
     tailscale = ./tailscale;
