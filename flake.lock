@@ -468,6 +468,20 @@
       }
     },
     "flake-compat_11": {
+      "locked": {
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "revCount": 57,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/edolstra/flake-compat/1.0.1/018afb31-abd1-7bff-a5e4-cff7e18efb7a/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/edolstra/flake-compat/1.0.1.tar.gz"
+      }
+    },
+    "flake-compat_12": {
       "flake": false,
       "locked": {
         "lastModified": 1696426674,
@@ -483,7 +497,7 @@
         "type": "github"
       }
     },
-    "flake-compat_12": {
+    "flake-compat_13": {
       "flake": false,
       "locked": {
         "lastModified": 1673956053,
@@ -499,7 +513,7 @@
         "type": "github"
       }
     },
-    "flake-compat_13": {
+    "flake-compat_14": {
       "flake": false,
       "locked": {
         "lastModified": 1696426674,
@@ -515,7 +529,7 @@
         "type": "github"
       }
     },
-    "flake-compat_14": {
+    "flake-compat_15": {
       "flake": false,
       "locked": {
         "lastModified": 1696426674,
@@ -1754,9 +1768,30 @@
         "type": "github"
       }
     },
-    "nixos-wsl": {
+    "nixos-vault-module": {
       "inputs": {
         "flake-compat": "flake-compat_11",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1734396819,
+        "narHash": "sha256-wCHdODHv2dKtRH+aqvy8z9xjQmaW1b/SsuZ4grrVQLg=",
+        "owner": "justinrubek",
+        "repo": "nixos-vault-service",
+        "rev": "135e083f72851e42b9f053f8dcf847b7aaaccf4b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "justinrubek",
+        "repo": "nixos-vault-service",
+        "type": "github"
+      }
+    },
+    "nixos-wsl": {
+      "inputs": {
+        "flake-compat": "flake-compat_12",
         "flake-utils": "flake-utils_8",
         "nixpkgs": [
           "nixpkgs"
@@ -2540,7 +2575,7 @@
     },
     "pre-commit-hooks_5": {
       "inputs": {
-        "flake-compat": "flake-compat_12",
+        "flake-compat": "flake-compat_13",
         "flake-utils": "flake-utils_9",
         "gitignore": "gitignore_9",
         "nixpkgs": "nixpkgs_10",
@@ -2562,7 +2597,7 @@
     },
     "pre-commit-hooks_6": {
       "inputs": {
-        "flake-compat": "flake-compat_13",
+        "flake-compat": "flake-compat_14",
         "gitignore": "gitignore_10",
         "nixpkgs": "nixpkgs_11",
         "nixpkgs-stable": "nixpkgs-stable_9"
@@ -2583,7 +2618,7 @@
     },
     "pre-commit-hooks_7": {
       "inputs": {
-        "flake-compat": "flake-compat_14",
+        "flake-compat": "flake-compat_15",
         "gitignore": "gitignore_11",
         "nixpkgs": [
           "thoenix",
@@ -2618,6 +2653,7 @@
         "nix-nomad": "nix-nomad",
         "nix-postgres": "nix-postgres",
         "nixos-hardware": "nixos-hardware",
+        "nixos-vault-module": "nixos-vault-module",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_9",
         "pre-commit-hooks": "pre-commit-hooks_5",
