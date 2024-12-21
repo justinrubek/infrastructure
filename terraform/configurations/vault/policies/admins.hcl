@@ -52,6 +52,11 @@ path "transit/*"
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
+path "cluster/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
 # Read health checks
 path "sys/health"
 {
