@@ -22,7 +22,7 @@
           changeAction = "reload";
           perms = "0440";
           template = ''
-            {{ with pkiCert "cluster/pki/etcd/issue/member" "common_name=etcd-server" "ip_sans=100.101.20.26" }}
+            {{ with pkiCert "cluster/pki/etcd/issue/member" "common_name=etcd-server" "ip_sans=100.101.20.26,127.0.0.1" "ttl=420h"}}
             {{ .Key }}
             {{ .CA }}
             {{ .Cert }}
