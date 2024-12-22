@@ -84,8 +84,9 @@ in {
       };
     };
 
-    vault_auth_backend.userpass = {
-      type = "userpass";
+    vault_auth_backend = {
+      approle = {type = "approle";};
+      userpass = {type = "userpass";};
     };
 
     vault_generic_endpoint.admin = {
