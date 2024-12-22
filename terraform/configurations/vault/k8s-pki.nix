@@ -10,14 +10,31 @@
           }
         '';
       };
+      kube_apiserver = {
+        name = "kube-apiserver";
+        policy = ''
+          path "cluster/pki/k8s/issue/member"
+          {
+            capabilities = ["create", "update"]
+          }
+        '';
+      };
     };
     vault_approle_auth_backend_role = {
       "cluster-controller" = {
         backend = ''''${vault_auth_backend.approle.path}'';
         role_name = "cluster-controller";
+        token_policies = ["etcd-member" "kube-apiserver"];
+      };
+      "etcd-member" = {
+        backend = ''''${vault_auth_backend.approle.path}'';
+        role_name = "etcd-member";
         token_policies = ["etcd-member"];
-        token_max_ttl = 1800;
-        token_ttl = 1200;
+      };
+      "kube-apiserver" = {
+        backend = ''''${vault_auth_backend.approle.path}'';
+        role_name = "k8s-apiserver";
+        token_policies = ["kube-apiserver"];
       };
     };
 
@@ -37,7 +54,6 @@
         allow_any_name = true;
         backend = ''''${vault_mount.pki-etcd.path}'';
         name = "member";
-        ttl = "2592000";
       };
       "kubelet" = {
         allow_bare_domains = true;
@@ -45,7 +61,6 @@
         allowed_domains = ["kubelet"];
         backend = ''''${vault_mount.pki-k8s.path}'';
         name = "member";
-        ttl = "2592000";
       };
     };
     vault_pki_secret_backend_root_cert = {
