@@ -3,10 +3,10 @@
   lib,
   ...
 }: let
-  top = config.services.justinrubek.kubernetes;
+  top = config.justinrubek.kubernetes;
   cfg = top.apiserver;
 
-  all_ips = lib.attrSets.attrValues (lib.attrsets.mapAttrs (name: value: value.ip) top.nodes);
+  all_ips = lib.attrsets.attrValues (lib.attrsets.mapAttrs (name: value: value.ip) top.nodes);
   internal_ip = "${top.nodes.${config.networking.hostName}.ip}";
   systemd_unit = "kube-apiserver";
   systemd_user = config.systemd.services.${systemd_unit}.serviceConfig.User;
@@ -19,13 +19,19 @@
     systemd_user,
     uri_sans ? null,
   }: let
-    ip_sans = lib.strings.concatStringsSep "," ip_sans;
-    uri_sans = lib.strings.concatStringsSep "," ip_sans;
+    ipSans =
+      if (ip_sans != null)
+      then (lib.strings.concatStringsSep "," ip_sans)
+      else null;
+    uriSans =
+      if (uri_sans != null)
+      then (lib.strings.concatStringsSep "," uri_sans)
+      else null;
   in {
     changeAction = "reload";
     perms = "0400";
     template = ''
-      {{ with pkiCert "${mount_path}" "common_name=${common_name}" ${lib.mkIf (ip_sans != null) "ip_sans=${ip_sans}"} ${lib.mkIf (uri_sans != null) "uri_sans=${uri_sans}"} "ttl=420h" }}
+      {{ with pkiCert "${mount_path}" "common_name=${common_name}" ${lib.optionalString (ipSans != null) "ip_sans=${ipSans}"} ${lib.optionalString (uriSans != null) "uri_sans=${uriSans}"} "ttl=420h" }}
       {{ .CA }}
       {{ .Cert }}
       {{ .Key }}
@@ -92,7 +98,7 @@
   };
 in {
   options = {
-    services.justinrubek.kubernetes.apiserver = {
+    justinrubek.kubernetes.apiserver = {
       enable = lib.mkEnableOption (lib.mdDoc "kubernetes api server");
     };
   };
@@ -111,7 +117,7 @@ in {
       enable = true;
       advertiseAddress = internal_ip;
       allowPrivileged = true;
-      clientCaFile = "";
+      clientCaFile = certs.apiserver.ca;
       enableAdmissionPlugins = ["NodeRestriction" "ServiceAccount"];
       etcd = {
         servers = all_ips;
@@ -136,6 +142,7 @@ in {
       kubeletClientKeyFile = certs.apiserver.key;
       runtimeConfig = "api/all";
       serviceAccountKeyFile = certs.service-account.key;
+      serviceAccountSigningKeyFile = certs.service-account.key;
       serviceClusterIpRange = "10.96.0.0/24";
       tlsCertFile = certs.apiserver.cert;
       tlsKeyFile = certs.apiserver.key;

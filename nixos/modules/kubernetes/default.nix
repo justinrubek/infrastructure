@@ -3,21 +3,25 @@
   lib,
   ...
 }: let
-  cfg = config.services.justinrubek.kubernetes;
+  cfg = config.justinrubek.kubernetes;
 in {
   imports = [./apiserver.nix];
 
   options = {
-    services.justinrubek.kubernetes = {
+    justinrubek.kubernetes = {
       enable = lib.mkEnableOption (lib.mdDoc "Kubernetes cluster components");
       nodes = lib.mkOption {
         type = lib.types.attrsOf (lib.types.submodule {
-          ip = lib.mkOption {type = lib.types.str;};
+          options = {
+            ip = lib.mkOption {type = lib.types.str;};
+          };
         });
         example = ''{ hostname.ip = "10.10.10.10"; }'';
       };
     };
   };
 
-  config = lib.mkIf cfg.enable {};
+  config = lib.mkIf cfg.enable {
+    services.kubernetes.masterAddress = "${cfg.nodes.${config.networking.hostName}.ip}";
+  };
 }
