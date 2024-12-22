@@ -22,5 +22,6 @@
     "cloudhost/hetzner" = ./cloudhost/hetzner;
 
     postgres = ./data/postgres;
+    kubernetes = ./kubernetes;
   };
 }
