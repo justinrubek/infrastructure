@@ -5,7 +5,7 @@
 }: let
   cfg = config.justinrubek.kubernetes;
 in {
-  imports = [./apiserver.nix];
+  imports = [./apiserver.nix ./controller-manager.nix];
 
   options = {
     justinrubek.kubernetes = {
