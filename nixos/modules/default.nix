@@ -8,6 +8,7 @@
 
     nomad = ./nomad;
     vault = ./vault;
+    "vault/reader" = ./vault/reader.nix;
     consul = ./consul;
 
     tailscale = ./tailscale;
@@ -21,5 +22,6 @@
     "cloudhost/hetzner" = ./cloudhost/hetzner;
 
     postgres = ./data/postgres;
+    kubernetes = ./kubernetes;
   };
 }
