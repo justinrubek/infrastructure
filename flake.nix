@@ -54,6 +54,10 @@
     thoenix = {
       url = "github:justinrubek/thoenix";
     };
+    vintagestory = {
+      url = "github:justinrubek/vintagestory";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {

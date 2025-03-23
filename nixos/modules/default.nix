@@ -21,5 +21,6 @@
     "cloudhost/hetzner" = ./cloudhost/hetzner;
 
     postgres = ./data/postgres;
+    vintagestory = ./vintagestory.nix;
   };
 }
