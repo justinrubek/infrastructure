@@ -28,13 +28,6 @@
           inputs'.thoenix.packages.cli
           self'.packages.terraform
 
-          self'.packages.vault-bin
-
-          self'.packages.nomad
-
-          pkgs.skopeo
-          self'.packages."scripts/skopeo-push"
-
           inputs'.nix-postgres.packages."psql_15/bin"
         ];
 

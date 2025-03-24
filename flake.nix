@@ -29,10 +29,6 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    nix-nomad = {
-      url = "github:tristanpemble/nix-nomad";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-postgres = {
       url = "github:justinrubek/nix-postgres";
     };
@@ -72,7 +68,6 @@
         inputs.thoenix.customOutputModule
         ./flake-parts/shells.nix
         ./flake-parts/ci.nix
-        ./containers
         ./packages
 
         ./modules
@@ -88,8 +83,6 @@
         ./flake-parts/terraform.nix
         ./flake-parts/terraformConfiguration.nix
         ./terraform/modules
-
-        ./nomad
 
         ./flake-parts/pre-commit.nix
         ./flake-parts/formatting.nix
